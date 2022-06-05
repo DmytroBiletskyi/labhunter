@@ -6,16 +6,14 @@
 		{% for l in lab %}
 				<li><div class="article-panel">
 		<p class="first">Категорія: {{l.cat}}</p>
-	                </div>
-					<h2>{{l.sub}}</h2>
+		<p>Предмет: {{l.sub}}</p>
 		{% autoescape on %}
 	    <div class="item">
-	        <img src="{{ l.photo.url }}" width="400" height="500">
+	        <img src="{{ l.photo.url }}" width="300" height="400">
 	    </div>
-	    {{l.topic|linebreaks|truncatewords:5}}
 		{% endautoescape %}
-				<div class="clear"></div>
-				<p class="link-buy-lab"><a href="#">Купити</a></p>
+				<button type="button" class="button-buy-lab"><a href="#">Купити</a></button>
+				</div>
 				</li>
 		{% endfor %}
 	</ul>

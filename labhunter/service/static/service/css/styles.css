@@ -21,7 +21,7 @@ a{
     background: #454851;
     color: #fff;
     font-family: 'Arial';
-    border-bottom: 5px solid #476C9B;
+    border-bottom: 5px solid #3f3f3f;
     position: relative;
 }
 
@@ -54,13 +54,14 @@ a{
 .wrapper .sidebar{
     position: absolute;
     width: 200px;
-    height: 100vh;
+    height: 80vh;
     background: #454851;
     padding: 30px 0;
     z-index: 1;
     left: 0;
     overflow-x: hidden;
     padding-top: 20px;
+    border-radius: 15px
 }
 
 .wrapper .sidebar h2{
@@ -142,19 +143,47 @@ a{
 }
 
 .wrapper .main_content .info div{
-    margin-bottom: 20px;
+    margin-bottom: 5px;
 }
 
-.list-articles p a{
-    color: #ff0000;
-}
 
 .content {
     font: 14px Verdana, Geneva, sans-serif;
     overflow: hidden;
+    max-width: inherit;
 }
 
+.content .list-articles{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    padding: 10px;
+}
 .content .list-articles li{
+    margin: 5px;
+}
+
+.content .list-articles .article-panel{
+    padding: 10px;
+    border: 1px solid #00af64;
+}
+
+.content .list-articles .article-panel .first{
+    color: #000000;
+    padding: 10px;
+    text-align: center;
+}
+
+.content .list-articles .button-buy-lab{
+    border: none;
+    padding: 5px 12px;
+    text-align: center;
     display: inline-block;
-    border: 1px solid #000;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    background-color: #4CAF50;
+}
+
+.content .list-articles .button-buy-lab:hover{
+    background-color: #24a319;
 }
