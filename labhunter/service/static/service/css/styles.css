@@ -187,3 +187,19 @@ a{
 .content .list-articles .button-buy-lab:hover{
     background-color: #24a319;
 }
+
+.block-filter{
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    max-width: 300px;
+    margin-left: auto;
+    align-items: center;
+    justify-content: center;
+}
+
+.block-filter .head {
+    padding: 5px;
+    display: block;
+    max-width: 200px;
+}
