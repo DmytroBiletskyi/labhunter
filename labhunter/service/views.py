@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponse, HttpResponseNotFound
+from django.http import HttpResponse, HttpResponseNotFound, Http404
 from django.core.files.storage import FileSystemStorage
 
 from .forms import *
@@ -38,6 +38,7 @@ def home(request):
         'menu': menu,
         'categories': categories,
         'cat_selected': 0,
+        'title': 'Головна сторінка',
     }
     return render(request, 'service/home.html', context=context)
 
@@ -47,16 +48,19 @@ def about(request):
 
 
 def select_cat(request, cat_id):
-    lab = Files.objects.filter(cat_id=cat_id)
+    files = Files.objects.filter(cat_id=cat_id)
     categories = Category.objects.all()
 
+    if len(files) == 0:
+        raise Http404()
+
     context = {
-        'lab': lab,
+        'files': files,
         'categories': categories,
         'menu': menu,
+        'title': 'Вибір по рубрикам',
         'cat_selected': cat_id,
     }
-
     return render(request, 'service/home.html', context=context)
 
 

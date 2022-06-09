@@ -1,21 +1,26 @@
 {% extends 'service/base.html' %}
 
 {% block content %}
+
 <div class="content">
 	<ul class="list-articles">
-		{% for l in lab %}
-				<li><div class="article-panel">
-		<p class="first">Категорія: {{l.cat}}</p>
-		<p>Предмет: {{l.sub}}</p>
-		{% autoescape on %}
-	    <div class="item">
-	        <img src="{{ l.photo.url }}" width="220" height="320">
-	    </div>
-		{% endautoescape %}
-				<button type="button" class="button-buy-lab"><a href="#">Купити</a></button>
-				</div>
-				</li>
-		{% endfor %}
+			{% for f in files %}
+					<li><div class="article-panel">
+			<p class="first">Категорія: {{f.cat}}</p>
+		{% if f.sub %}
+			<p>Предмет: {{f.sub}}</p>
+		{% else %}
+			<p>Предмет: ---</p>
+		{% endif %}
+			{% autoescape on %}
+		    <div class="item">
+		        <img src="{{ f.photo.url }}" width="220" height="320">
+		    </div>
+			{% endautoescape %}
+					<button type="button" class="button-buy-lab"><a href="#">Купити</a></button>
+					</div>
+					</li>
+			{% endfor %}
 	</ul>
 </div>
 {% endblock %}

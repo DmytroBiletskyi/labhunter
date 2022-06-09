@@ -64,6 +64,11 @@ a{
     border-radius: 15px
 }
 
+.wrapper .sidebar .selected{
+    color: #00ff00;
+    background-color: #00ff00;
+}
+
 .wrapper .sidebar h2{
     color: #fff;
     text-transform: uppercase;
@@ -129,7 +134,7 @@ a{
     margin-left: 200px;
 }
 
-.wrapper .main_content .header-sidebar{
+.wrapper .main_content .header-content{
     padding: 20px;
     background: #fff;
     color: #717171;
