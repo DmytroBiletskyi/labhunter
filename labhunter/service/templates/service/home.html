@@ -3,24 +3,25 @@
 {% block content %}
 
 <div class="content">
-	<ul class="list-articles">
-			{% for f in files %}
-					<li><div class="article-panel">
-			<p class="first">Категорія: {{f.cat}}</p>
-		{% if f.sub %}
-			<p>Предмет: {{f.sub}}</p>
-		{% else %}
-			<p>Предмет: ---</p>
-		{% endif %}
-			{% autoescape on %}
-		    <div class="item">
-		        <img src="{{ f.photo.url }}" width="220" height="320">
-		    </div>
-			{% endautoescape %}
-					<button type="button" class="button-buy-lab"><a href="#">Купити</a></button>
-					</div>
-					</li>
-			{% endfor %}
-	</ul>
+    <ul class="list-articles">
+        {% for f in files %}
+        <li class="file">
+            <div class="article-panel">
+                <p class="first">Категорія: {{f.cat}}</p>
+                {% if f.sub %}
+                <p class="subject">Предмет: {{f.sub}}</p>
+                {% else %}
+                <p class="subject">Предмет: ---</p>
+                {% endif %}
+                {% autoescape on %}
+                <div class="item">
+                    <img src="{{ f.photo.url }}" height="100%" width="100%">
+                </div>
+                {% endautoescape %}
+                <button type="button" class="button-buy-lab"><a href="#">Купити</a></button>
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
 </div>
 {% endblock %}

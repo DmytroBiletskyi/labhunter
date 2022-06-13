@@ -23,6 +23,7 @@ a{
     font-family: 'Arial';
     border-bottom: 5px solid #3f3f3f;
     position: relative;
+    min-width: 580px;
 }
 
 .header__section{
@@ -61,12 +62,12 @@ a{
     left: 0;
     overflow-x: hidden;
     padding-top: 20px;
-    border-radius: 15px
+    border-radius: 15px;
+    min-height: 460px;
 }
 
-.wrapper .sidebar .selected{
-    color: #00ff00;
-    background-color: #00ff00;
+.wrapper .sidebar li.selected{
+    color: #0059b2;
 }
 
 .wrapper .sidebar h2{
@@ -80,6 +81,7 @@ a{
     padding: 15px;
     border-bottom: 1px solid rgba(0,0,0,0.05);
     border-top: 1px solid rgba(255, 255, 255, 0.05);
+    color:  #00E599;
 }
 
 .wrapper .sidebar ul li a{
@@ -89,7 +91,6 @@ a{
 
 .wrapper .sidebar ul li a .bi{
     width: 25px;
-
 }
 
 .wrapper .sidebar ul li:hover{
@@ -125,8 +126,12 @@ a{
     border-top-left-radius: 5px;
 }
 @media screen and (max-height: 450px) {
-  .sidebar {padding-top: 15px;}
-  .sidebar a {font-size: 18px;}
+    .sidebar {padding-top: 15px;}
+    .sidebar a {font-size: 18px;}
+}
+
+@media (min-width: 550px) {
+    .wrapper .main_content .info{margin: 20px;}
 }
 
 .wrapper .main_content{
@@ -142,7 +147,7 @@ a{
 }
 
 .wrapper .main_content .info{
-    margin: 20px;
+
     color: #717171;
     line-height: 25px;
 }
@@ -160,9 +165,32 @@ a{
 
 .content .list-articles{
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    padding: 10px;
+    grid-template-columns: 1fr 1fr;
 }
+.content .list-articles .file{
+    max-width: 100%;
+    min-width: 242px;
+    margin: 10px;
+    margin-left: 20px;
+}
+
+@media (min-width: 300px) {
+.content .list-articles {grid-template-columns: 1fr;}
+}
+
+@media (min-width: 780px) {
+.content .list-articles {grid-template-columns: 1fr 1fr;}
+}
+
+@media (min-width: 1050px) {
+.content .list-articles {grid-template-columns: 1fr 1fr 1fr;}
+}
+
+@media (min-width: 1320px) {
+.content .list-articles {grid-template-columns: 1fr 1fr 1fr 1fr;}
+}
+
+
 .content .list-articles li{
     margin: 5px;
 }
@@ -172,10 +200,14 @@ a{
     border: 1px solid #00af64;
 }
 
-.content .list-articles .article-panel .first{
+.content .list-articles .file .article-panel .first{
     color: #000000;
     padding: 10px;
     text-align: center;
+}
+
+.content .list-articles .file .article-panel .subject{
+    margin-bottom: 5px;
 }
 
 .content .list-articles .button-buy-lab{

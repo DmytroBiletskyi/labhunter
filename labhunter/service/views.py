@@ -8,7 +8,7 @@ from .models import *
 
 menu = [
     {'title': "Про сайт", 'url_name': 'about'},
-    {'title': "Завантажити роботу", 'url_name': 'add_work'},
+    {'title': "Завантажити роботу", 'url_name': 'add-work'},
     {'title': "Зворотній зв'язок", 'url_name': 'contact'},
         ]
 #categories = [
@@ -47,8 +47,8 @@ def about(request):
     return HttpResponse("Про сайт")
 
 
-def select_cat(request, cat_id):
-    files = Files.objects.filter(cat_id=cat_id)
+def select_cat(request, cat_slug):
+    files = Files.objects.filter(cat__cat_slug=cat_slug)
     categories = Category.objects.all()
 
     if len(files) == 0:
@@ -59,7 +59,7 @@ def select_cat(request, cat_id):
         'categories': categories,
         'menu': menu,
         'title': 'Вибір по рубрикам',
-        'cat_selected': cat_id,
+        'cat_selected': cat_slug,
     }
     return render(request, 'service/home.html', context=context)
 
