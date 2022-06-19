@@ -9,14 +9,15 @@
             <div class="article-panel">
                 <p class="first">Категорія: {{f.cat}}</p>
                 {% if f.sub %}
-                <p class="subject">Предмет: {{f.sub}}</p>
+                    <p class="subject">Предмет: {{f.sub}}</p>
                 {% else %}
-                <p class="subject">Предмет: ---</p>
+                    <p class="subject">Предмет: ---</p>
                 {% endif %}
                 {% autoescape on %}
-                <div class="item">
-                    <img src="{{ f.photo.url }}" height="100%" width="100%">
-                </div>
+                    <div class="item"><a href="{{ f.get_absolute_url }}">
+                        <img src="{{ f.photo.url }}" height="100%" width="100%">
+                    </a>
+                    </div>
                 {% endautoescape %}
                 <button type="button" class="button-buy-lab"><a href="#">Купити</a></button>
             </div>

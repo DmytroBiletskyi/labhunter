@@ -1,0 +1,10 @@
+{% extends 'service/base.html' %}
+
+{% block content %}
+<h3>{{file.title}}</h3>
+
+{% if file.photo %}
+<p><iframe src='{{file.docx}}' width='700' height='700' frameborder='0'></iframe></p>
+{% endif %}
+
+{% endblock %}

@@ -1,16 +1,20 @@
-from django.shortcuts import render
+
+from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseNotFound, Http404
 from django.core.files.storage import FileSystemStorage
+from django.urls import reverse_lazy
+from django.views.generic import CreateView
 
 from .forms import *
 from .models import *
+from .utils import *
 
 
-menu = [
-    {'title': "Про сайт", 'url_name': 'about'},
-    {'title': "Завантажити роботу", 'url_name': 'add-work'},
-    {'title': "Зворотній зв'язок", 'url_name': 'contact'},
-        ]
+#menu = [
+#    {'title': "Про сайт", 'url_name': 'about'},
+#    {'title': "Завантажити роботу", 'url_name': 'add-work'},
+#    {'title': "Зворотній зв'язок", 'url_name': 'contact'},
+#        ]
 #categories = [
 #    {'title': "Лабораторні", 'url_name': 'lab'},
 #    {'title': "Курсові", 'url_name': 'curs'},
@@ -64,6 +68,19 @@ def select_cat(request, cat_slug):
     return render(request, 'service/home.html', context=context)
 
 
+def select_file(request, file_slug):
+    file = get_object_or_404(Files, file_slug=file_slug)
+
+    context = {
+        'file': file,
+        'menu': menu,
+        'title': file.title,
+        'cat_selected': file.cat_id,
+    }
+
+    return render(request, 'service/file.html', context=context)
+
+
 def contact(request):
     return HttpResponse("Зворотній зв'язок")
 
@@ -78,13 +95,20 @@ def login(request):
     return render(request, 'service/login.html', {'form': form})
 
 
-def register(request):
-    return HttpResponse("Зареєструватись")
-
-
 def add_work(request):
     return HttpResponse("Додається робота")
 
 
 def pageNotFound(request, exception):
     return HttpResponseNotFound('<h1>Страница не найдена</h1>')
+
+class RegisterUser(DataMixin, CreateView):
+    form_class = RegisterUserForm
+    template_name = 'service/register.html'
+    success_url = reverse_lazy('login')
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        c_def = self.get_user_context(title='Реєстрація')
+        return dict(list(context.items()) + list(c_def.items()))
+

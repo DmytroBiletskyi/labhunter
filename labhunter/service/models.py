@@ -17,6 +17,9 @@ class Files(models.Model):
     def __str__(self):
         return self.topic
 
+    def get_absolute_url(self):
+        return reverse('select-file', kwargs={'file_slug': self.file_slug})
+
     class Meta:
         verbose_name = 'Усі файли'
         verbose_name_plural = 'Усі файли'

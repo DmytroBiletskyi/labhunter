@@ -72,11 +72,20 @@ a{
 
 .wrapper .sidebar h2{
     color: #fff;
+    letter-spacing: 3px;
     text-transform: uppercase;
+    transition: 0.5s;
     text-align: center;
     margin-bottom: 30px;
 }
 
+.wrapper .sidebar h2:hover{
+    color: #fff;
+    text-shadow: 0 0 5px #03e9f4,
+        0 0 25px #03e9f4,
+        0 0 50px #03e9f4,
+        0 0 100px #03e9f4;
+}
 .wrapper .sidebar ul li{
     padding: 15px;
     border-bottom: 1px solid rgba(0,0,0,0.05);
@@ -128,6 +137,9 @@ a{
 @media screen and (max-height: 450px) {
     .sidebar {padding-top: 15px;}
     .sidebar a {font-size: 18px;}
+}
+@media screen and (max-width: 580px){
+    .header .header__item {font-size: 15px; padding: 10px 9px;}
 }
 
 @media (min-width: 550px) {
@@ -200,6 +212,11 @@ a{
     border: 1px solid #00af64;
 }
 
+.content .list-articles .article-panel:hover{
+    background-color: #00E599;
+}
+
+
 .content .list-articles .file .article-panel .first{
     color: #000000;
     padding: 10px;
@@ -208,6 +225,18 @@ a{
 
 .content .list-articles .file .article-panel .subject{
     margin-bottom: 5px;
+}
+
+.content .list-articles .file .article-panel .item{
+    overflow: hidden;
+}
+
+.content .list-articles .file .article-panel .item:hover img {
+    transform: scale(0.9);
+}
+
+.content .list-articles .file .article-panel img{
+    transition: transform 0.25s;
 }
 
 .content .list-articles .button-buy-lab{
