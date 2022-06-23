@@ -1,5 +1,6 @@
-
-from django.shortcuts import render, get_object_or_404
+from django.contrib.auth import logout, login
+from django.contrib.auth.views import LoginView
+from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse, HttpResponseNotFound, Http404
 from django.core.files.storage import FileSystemStorage
 from django.urls import reverse_lazy
@@ -85,14 +86,14 @@ def contact(request):
     return HttpResponse("Зворотній зв'язок")
 
 
-def login(request):
-    if request.method == 'POST':
-        form = Test(request.POST)
-        if form.is_valid():
-            print((form.cleaned_data.get('title') == "Міша"))
-    else:
-        form = Test()
-    return render(request, 'service/login.html', {'form': form})
+#def login(request):
+#    if request.method == 'POST':
+#        form = Test(request.POST)
+#        if form.is_valid():
+#            print((form.cleaned_data.get('title') == "Міша"))
+#    else:
+#        form = Test()
+#    return render(request, 'service/login.html', {'form': form})
 
 
 def add_work(request):
@@ -112,3 +113,24 @@ class RegisterUser(DataMixin, CreateView):
         c_def = self.get_user_context(title='Реєстрація')
         return dict(list(context.items()) + list(c_def.items()))
 
+    def form_valid(self, form):
+        user = form.save()
+        login(self.request, user)
+        return redirect('home')
+
+class LoginUser(DataMixin, LoginView):
+    form_class = LoginUserForm
+    template_name = 'service/login.html'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        c_def = self.get_user_context(title='Авторизація')
+        return dict(list(context.items()) + list(c_def.items()))
+
+    def get_success_url(self):
+        return reverse_lazy('home')
+
+
+def logoutuser(request):
+    logout(request)
+    return redirect('login')

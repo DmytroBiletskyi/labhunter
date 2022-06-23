@@ -1,0 +1,9 @@
+.wrapper{
+    display: flex;
+    position: static;
+}
+
+.register-label{
+    text-align: center;
+    border: 1px solid red;
+}
