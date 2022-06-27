@@ -4,7 +4,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse, HttpResponseNotFound, Http404
 from django.core.files.storage import FileSystemStorage
 from django.urls import reverse_lazy
-from django.views.generic import CreateView
+from django.views.generic import CreateView, ListView
 
 from .forms import *
 from .models import *
@@ -34,18 +34,30 @@ def upload(request):
     return render(request, 'service/upload.html', context)
 
 
-def home(request):
-    files = Files.objects.all()
-    categories = Category.objects.all()
 
-    context = {
-        'files': files,
-        'menu': menu,
-        'categories': categories,
-        'cat_selected': 0,
-        'title': 'Головна сторінка',
-    }
-    return render(request, 'service/home.html', context=context)
+class ServiceHome(DataMixin, ListView):
+    model = Files
+    template_name = 'service/home.html'
+    context_object_name = 'files'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        c_def = self.get_user_context(title='Головна сторінка')
+        return dict(list(context.items()) + list(c_def.items()))
+
+
+#def home(request):
+#    files = Files.objects.all()
+#    categories = Category.objects.all()
+#
+#    context = {
+#        'files': files,
+#        'menu': menu,
+#        'categories': categories,
+#        'cat_selected': 0,
+#        'title': 'Головна сторінка',
+#    }
+#    return render(request, 'service/home.html', context=context)
 
 
 def about(request):
@@ -69,6 +81,15 @@ def select_cat(request, cat_slug):
     return render(request, 'service/home.html', context=context)
 
 
+
+#class ShowFile(DataMixin, ListView):
+#    model = Files
+#    template_name = 'service/file.html'
+#
+#    def get_context_data(self, *, object_list=None, **kwargs):
+#        context = super().get_context_data(**kwargs)
+#        c_def = self.get_user_context(title='Test')
+#        return dict(list(context.items()) + list(c_def.items()))
 def select_file(request, file_slug):
     file = get_object_or_404(Files, file_slug=file_slug)
 
@@ -96,9 +117,15 @@ def contact(request):
 #    return render(request, 'service/login.html', {'form': form})
 
 
-def add_work(request):
-    return HttpResponse("Додається робота")
+class AddWork(DataMixin, CreateView):
+    form_class = AddFileForm
+    template_name = 'service/upload.html'
+    success_url = reverse_lazy('home')
 
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        c_def = self.get_user_context(title='Завантаження роботи')
+        return dict(list(context.items()) + list(c_def.items()))
 
 def pageNotFound(request, exception):
     return HttpResponseNotFound('<h1>Страница не найдена</h1>')

@@ -5,8 +5,18 @@ from django.contrib.auth.models import User
 from .models import *
 
 
-class Test(forms.Form):
-    title = forms.CharField(max_length=255)
+class AddFileForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['cat'].empty_label = "Категорія не вибрана"
+        self.fields['sub'].empty_label = "Предмет не вибраний"
+
+    class Meta:
+        model = Files
+        fields = ['title', 'teacher', 'file_slug', 'docx', 'topic', 'photo', 'work_number', 'other_files', 'cat', 'sub']
+        widgets = {
+            'title': forms.TextInput(attrs={'class': 'form-input'})
+        }
 
 
 class RegisterUserForm(UserCreationForm):

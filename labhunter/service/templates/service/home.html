@@ -15,7 +15,9 @@
                 {% endif %}
                 {% autoescape on %}
                     <div class="item"><a href="{{ f.get_absolute_url }}">
-                        <img src="{{ f.photo.url }}" height="100%" width="100%">
+                        {% if f.photo %}
+                            <img src="{{ f.photo.url }}" height="100%" width="100%">
+                        {% endif %}
                     </a>
                     </div>
                 {% endautoescape %}

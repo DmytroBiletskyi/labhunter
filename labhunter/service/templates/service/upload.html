@@ -1,11 +1,16 @@
+{% extends 'service/base.html' %}
+
 {% block content %}
-    <h2>Upload</h2>
-    <form method="post" enctype="multipart/form-data">
+    <h1>{{ title }}</h1>
+
+    <form action="{% url 'add-work' %}" method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        <input type="file" name="document">
-        <button type="submit">Upload file</button>
+
+        {% for f in form %}
+            <p><label class="form-label" for="{{ f.id_for_label }}">{{ f.label }}</label>{{ f }}</p>
+            <div class="form-error">{{ f.errors }}</div>
+        {% endfor %}
+        <button type="submit">Добавити</button>
     </form>
-{% if url %}
-    <p>Uploaded file: <a href="{{ url }}">{{ url }}</a></p>
-{% endif %}
+
 {% endblock %}

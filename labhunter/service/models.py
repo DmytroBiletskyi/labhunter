@@ -1,9 +1,9 @@
 from django.db import models
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 
 
 class Files(models.Model):
-    title = models.CharField(max_length=255, verbose_name='Титулка')
+    title = models.CharField(max_length=255, verbose_name='Назва файлу')
     teacher = models.CharField(max_length=255, verbose_name='Викладач')
     docx = models.FileField(upload_to='files/docx/', verbose_name='Шлях до документу')
     topic = models.CharField(max_length=255, null=True, verbose_name='Тема роботи')
@@ -11,6 +11,7 @@ class Files(models.Model):
     work_number = models.IntegerField(null=True, blank=True, verbose_name='Номер роботи')
     other_files = models.FileField(upload_to='files/other/', blank=True, verbose_name='Дадаткові файли')
     file_slug = models.SlugField(max_length=255, unique=True, db_index=True, verbose_name='URL')
+    #google_docx = models.URLField(max_length=200, unique=True, blank=True, verbose_name='Посилання на файл')
     cat = models.ForeignKey('Category', on_delete=models.CASCADE, verbose_name='Категорія')
     sub = models.ForeignKey('Subject', on_delete=models.CASCADE, null=True, blank=True, verbose_name='Предмет')
 
@@ -18,7 +19,7 @@ class Files(models.Model):
         return self.topic
 
     def get_absolute_url(self):
-        return reverse('select-file', kwargs={'file_slug': self.file_slug})
+        return reverse_lazy('select-file', kwargs={'file_slug': self.file_slug})
 
     class Meta:
         verbose_name = 'Усі файли'
