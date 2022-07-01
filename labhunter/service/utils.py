@@ -10,7 +10,11 @@ class DataMixin:
     def get_user_context(self, **kwargs):
         context = kwargs
         categories = Category.objects.all()
-        context['menu'] = menu
+        #categories = Category.objects.annotate(Count('files'))
+        login_menu = menu.copy()
+        if not self.request.user.is_authenticated:
+            login_menu.pop(1)
+        context['menu'] = login_menu
         context['categories'] = categories
         if 'cat_selected' not in context:
             context['cat_selected'] = 0

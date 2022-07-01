@@ -11,12 +11,12 @@ class Files(models.Model):
     work_number = models.IntegerField(null=True, blank=True, verbose_name='Номер роботи')
     other_files = models.FileField(upload_to='files/other/', blank=True, verbose_name='Дадаткові файли')
     file_slug = models.SlugField(max_length=255, unique=True, db_index=True, verbose_name='URL')
-    #google_docx = models.URLField(max_length=200, unique=True, blank=True, verbose_name='Посилання на файл')
+    google_docx = models.URLField(max_length=200, null=True, unique=True, blank=True, verbose_name='Посилання на файл')
     cat = models.ForeignKey('Category', on_delete=models.CASCADE, verbose_name='Категорія')
     sub = models.ForeignKey('Subject', on_delete=models.CASCADE, null=True, blank=True, verbose_name='Предмет')
 
     def __str__(self):
-        return self.topic
+        return self.title
 
     def get_absolute_url(self):
         return reverse_lazy('select-file', kwargs={'file_slug': self.file_slug})

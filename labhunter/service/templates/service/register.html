@@ -2,15 +2,24 @@
 
 {% block content %}
 <div class="register-label">
-    <h1>{{ title }}</h1>
+    <h2>{{ title }}</h2>
 
     <form method="post">
         {% csrf_token %}
+        <div class="form-error">{{ form.non_field_errors }}</div>
         {% for f in form %}
-            <p><label class="form-label" for="{{ f.id_for_label }}">{{f.label}}: </label>{{ f }}</p>
+        <div class="register-box">
+            <p>{{ f }}<label class="form-label" for="{{ f.id_for_label }}">{{f.label}} </label></p>
+        </div>
             <div class="form-error">{{ f.errors }}</div>
         {% endfor %}
-        <button type="submit">Реєстрація</button>
+        <button type="submit">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            Зареєструватись
+        </button>
     </form>
 </div>
 {% endblock %}

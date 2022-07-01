@@ -1,15 +1,17 @@
 from django.contrib.auth import logout, login
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse, HttpResponseNotFound, Http404
 from django.core.files.storage import FileSystemStorage
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, ListView
+from django.views.generic import CreateView, ListView, DetailView
 
 from .forms import *
 from .models import *
 from .utils import *
-
+# biletskyi_labhunter
 
 #menu = [
 #    {'title': "Про сайт", 'url_name': 'about'},
@@ -24,14 +26,14 @@ from .utils import *
 #]
 
 
-def upload(request):
-    context = {}
-    if request.method == "POST":
-        uploaded_file = request.FILES['document']
-        fs = FileSystemStorage()
-        name = fs.save(uploaded_file.name, uploaded_file)
-        context['url'] = fs.url(name)
-    return render(request, 'service/upload.html', context)
+#def upload(request):
+#    context = {}
+#    if request.method == "POST":
+#        uploaded_file = request.FILES['document']
+#        fs = FileSystemStorage()
+#        name = fs.save(uploaded_file.name, uploaded_file)
+#        context['url'] = fs.url(name)
+#    return render(request, 'service/upload.html', context)
 
 
 
@@ -58,45 +60,61 @@ class ServiceHome(DataMixin, ListView):
 #        'title': 'Головна сторінка',
 #    }
 #    return render(request, 'service/home.html', context=context)
-
-
-def about(request):
-    return HttpResponse("Про сайт")
-
-
-def select_cat(request, cat_slug):
-    files = Files.objects.filter(cat__cat_slug=cat_slug)
-    categories = Category.objects.all()
-
-    if len(files) == 0:
-        raise Http404()
-
-    context = {
-        'files': files,
-        'categories': categories,
-        'menu': menu,
-        'title': 'Вибір по рубрикам',
-        'cat_selected': cat_slug,
-    }
-    return render(request, 'service/home.html', context=context)
-
-
-
-#class ShowFile(DataMixin, ListView):
+#class ShowFile(DataMixin, DetailView):
 #    model = Files
 #    template_name = 'service/file.html'
+#    slug_url_kwarg = 'file_slug'
+#    context_object_name = 'file'
 #
 #    def get_context_data(self, *, object_list=None, **kwargs):
 #        context = super().get_context_data(**kwargs)
-#        c_def = self.get_user_context(title='Test')
+#        c_def = self.get_user_context(title='categories')
 #        return dict(list(context.items()) + list(c_def.items()))
+
+def about(request):
+    return HttpResponse('Про сайт')
+
+class ShowCat(DataMixin, ListView):
+    model = Files
+    template_name = 'service/home.html'
+    context_object_name = 'files'
+    allow_empty = False
+    def get_queryset(self):
+        return Files.objects.filter(cat__cat_slug=self.kwargs['cat_slug'])
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        c_def = self.get_user_context(title='Категорія - ' + str(context['files'][0].cat), cat_selected=str(context['files'][0].cat))
+        return dict(list(context.items()) + list(c_def.items()))
+
+#def select_cat(request, cat_slug):
+#    files = Files.objects.filter(cat__cat_slug=cat_slug)
+#    categories = Category.objects.all()
+#
+#    if len(files) == 0:
+#        raise Http404()
+#
+#    context = {
+#        'files': files,
+#        'categories': categories,
+#        'menu': menu,
+#        'title': 'Вибір по рубрикам',
+#        'cat_selected': cat_slug,
+#    }
+#    return render(request, 'service/home.html', context=context)
+
+
 def select_file(request, file_slug):
     file = get_object_or_404(Files, file_slug=file_slug)
-
+    categories = Category.objects.all()
+    login_menu = menu.copy()
+    if not request.user.is_authenticated:
+        login_menu.pop(1)
     context = {
         'file': file,
-        'menu': menu,
+        'menu': login_menu,
         'title': file.title,
+        'categories': categories,
         'cat_selected': file.cat_id,
     }
 
@@ -117,7 +135,7 @@ def contact(request):
 #    return render(request, 'service/login.html', {'form': form})
 
 
-class AddWork(DataMixin, CreateView):
+class AddWork(LoginRequiredMixin, DataMixin, CreateView):
     form_class = AddFileForm
     template_name = 'service/upload.html'
     success_url = reverse_lazy('home')
