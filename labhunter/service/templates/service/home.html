@@ -21,7 +21,16 @@
                     </a>
                     </div>
                 {% endautoescape %}
-                <button type="button" class="button-buy-lab"><a href="#">Купити</a></button>
+                <form action="{% url 'cart:cart_add' f.id %}" method="post">
+                    {% csrf_token %}
+                        <button type="submit" class="button-buy-lab">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            Купити
+                        </button>
+                </form>
             </div>
         </li>
         {% endfor %}

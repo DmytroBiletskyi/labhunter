@@ -6,8 +6,12 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse, HttpResponseNotFound, Http404
 from django.core.files.storage import FileSystemStorage
 from django.urls import reverse_lazy
+from django.views.decorators.http import require_POST
 from django.views.generic import CreateView, ListView, DetailView
+from django.contrib import messages
+from django.utils import timezone
 
+from cart.forms import CartAddProductForm
 from .forms import *
 from .models import *
 from .utils import *
@@ -107,6 +111,7 @@ class ShowCat(DataMixin, ListView):
 def select_file(request, file_slug):
     file = get_object_or_404(Files, file_slug=file_slug)
     categories = Category.objects.all()
+    cart_file_form = CartAddProductForm()
     login_menu = menu.copy()
     if not request.user.is_authenticated:
         login_menu.pop(1)
@@ -116,6 +121,7 @@ def select_file(request, file_slug):
         'title': file.title,
         'categories': categories,
         'cat_selected': file.cat_id,
+        'cart_file_form': cart_file_form,
     }
 
     return render(request, 'service/file.html', context=context)
@@ -179,3 +185,70 @@ class LoginUser(DataMixin, LoginView):
 def logoutuser(request):
     logout(request)
     return redirect('login')
+
+
+#def file_detail(request, id, slug):
+#    file = get_object_or_404(Files,
+#                                id=id,
+#                                slug=slug,
+#                                available=True)
+#    cart_file_form = CartAddProductForm()
+#    return render(request, 'service/file.html', {'file': file,
+#                                                        'cart_file_form': cart_file_form})
+
+
+#def add_to_cart(request, pk):
+#    item = get_object_or_404(Files, pk=pk)
+#    order_item, created = OrderItem.objects.get_or_create(
+#        item=item,
+#        user=request.user,
+#        ordered=False
+#    )
+#    order_qs = Order.objects.filter(user=request.user, ordered=False)
+#
+#    if order_qs.exists():
+#        order = order_qs[0]
+#
+#        if order.items.filter(item__pk=item.pk).exists():
+#            order_item.quantity += 1
+#            order_item.save()
+#            messages.info(request, "Added quantity Item")
+#            return redirect("service:cart", pk=pk)
+#        else:
+#            order.items.add(order_item)
+#            messages.info(request, "Item added to your cart")
+#            return redirect("service:cart", pk=pk)
+#    else:
+#        ordered_date = timezone.now()
+#        order = Order.objects.create(user=request.user, ordered_date=ordered_date)
+#        order.items.add(order_item)
+#        messages.info(request, "Item added to your cart")
+#        return redirect("service:cart", pk=pk)
+#
+#
+#def remove_from_cart(request, pk):
+#    item = get_object_or_404(Files, pk=pk)
+#    order_qs = Order.objects.filter(
+#        user=request.user,
+#        ordered=False
+#    )
+#    if order_qs.exists():
+#        order = order_qs[0]
+#        if order.items.filter(item__pk=item.pk).exists():
+#            order_item = OrderItem.objects.filter(
+#                item=item,
+#                user=request.user,
+#                ordered=False
+#            )[0]
+#            order_item.delete()
+#            messages.info(request, "Item \""+order_item.item.title+"\" remove from your cart")
+#            return redirect("service:cart")
+#        else:
+#            messages.info(request, "This Item not in your cart")
+#            return redirect("service:cart", pk=pk)
+#    else:
+#        #add message doesnt have order
+#        messages.info(request, "You do not have an Order")
+#        return redirect("service:cart", pk=pk)
+#
+#

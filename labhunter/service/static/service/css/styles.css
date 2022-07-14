@@ -314,6 +314,7 @@ nav label:hover{
     margin: 4px 2px;
     cursor: pointer;
     background-color: #4CAF50;
+    color: #fff;
 }
 
 .content .list-articles .button-buy-lab:hover{

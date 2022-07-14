@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, re_path, include
 from .views import *
 
 urlpatterns = [
@@ -12,4 +12,6 @@ urlpatterns = [
     path('login/', LoginUser.as_view(), name='login'),
     path('logout/', logoutuser, name='logout'),
     path('register/', RegisterUser.as_view(), name='register'),
+    #path('add-to-cart/<pk>/', add_to_cart, name='add-to-cart'),
+    #path('remove-from-cart/<pk>/', remove_from_cart, name='remove-from-cart'),
 ]

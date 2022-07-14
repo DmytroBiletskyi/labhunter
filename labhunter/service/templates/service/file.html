@@ -4,7 +4,22 @@
 <h3>{{file.title}}</h3>
 
 {% if file.photo %}
-<p><iframe src='{{file.docx}}' width='700' height='700' frameborder='0'></iframe></p>
+<p><iframe src='{{file.docx}}' width='200' height='300' frameborder='0'></iframe></p>
 {% endif %}
-
+<p class="price">{{ file.price }}$</p>
+{% if cart|length < file.id %}
+<form action="{% url 'cart:cart_add' file.id %}" method="post">
+    {{ cart_file_form }}
+    {% csrf_token %}
+    <button type="submit">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            Add to cart
+    </button>
+</form>
+{% else %}
+<h3>Робота уже в корзині</h3>
+{% endif %}
 {% endblock %}
