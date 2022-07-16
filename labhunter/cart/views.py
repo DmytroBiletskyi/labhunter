@@ -14,7 +14,6 @@ def cart_add(request, file_id):
     form = CartAddProductForm(request.POST)
     if form.is_valid():
         cd = form.cleaned_data
-        print(cd)
         cart.add(file=file,
                  quantity=1,
                  update_quantity=cd['update'])

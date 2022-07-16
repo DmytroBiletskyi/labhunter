@@ -21,16 +21,20 @@
                     </a>
                     </div>
                 {% endautoescape %}
-                <form action="{% url 'cart:cart_add' f.id %}" method="post">
-                    {% csrf_token %}
-                        <button type="submit" class="button-buy-lab">
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                            Купити
-                        </button>
-                </form>
+                {% if f.id in all_file %}
+                    <form action="{% url 'cart:cart_add' f.id %}" method="post">
+                        {% csrf_token %}
+                            <button type="submit" class="button-buy-lab">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                                Купити
+                            </button>
+                    </form>
+                {% else %}
+                    <div class="button-buy-lab"><a href="{% url 'cart:cart_detail' %}">Додано в корзину</a></div>
+                {% endif %}
             </div>
         </li>
         {% endfor %}

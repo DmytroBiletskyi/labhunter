@@ -11,6 +11,8 @@ from django.views.generic import CreateView, ListView, DetailView
 from django.contrib import messages
 from django.utils import timezone
 
+from cart import cart
+from cart.cart import Cart
 from cart.forms import CartAddProductForm
 from .forms import *
 from .models import *
@@ -113,6 +115,15 @@ def select_file(request, file_slug):
     categories = Category.objects.all()
     cart_file_form = CartAddProductForm()
     login_menu = menu.copy()
+    shop_cart = cart.Cart(request)
+    all_file = set()
+    for fd in Files.objects.all():
+        all_file.add(fd.id)
+    for sc in shop_cart:
+        if sc['file'].id in all_file:
+            all_file.remove(sc['file'].id)
+        else:
+            pass
     if not request.user.is_authenticated:
         login_menu.pop(1)
     context = {
@@ -122,6 +133,8 @@ def select_file(request, file_slug):
         'categories': categories,
         'cat_selected': file.cat_id,
         'cart_file_form': cart_file_form,
+        'shop_cart': shop_cart,
+        'all_file': all_file,
     }
 
     return render(request, 'service/file.html', context=context)

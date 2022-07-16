@@ -7,7 +7,8 @@
 <p><iframe src='{{file.docx}}' width='200' height='300' frameborder='0'></iframe></p>
 {% endif %}
 <p class="price">{{ file.price }}$</p>
-{% if cart|length < file.id %}
+
+{% if file.id in all_file %}
 <form action="{% url 'cart:cart_add' file.id %}" method="post">
     {{ cart_file_form }}
     {% csrf_token %}

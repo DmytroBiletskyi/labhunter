@@ -27,6 +27,16 @@ class SubjectAdmin(admin.ModelAdmin):
     prepopulated_fields = {'sub_slug': ('sub_name',)}
 
 
+class OrderItemAdmin(admin.ModelAdmin):
+    pass
+
+
+class OrderAdmin(admin.ModelAdmin):
+    pass
+
+
 admin.site.register(Files, ServiceAdmin)
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Subject, SubjectAdmin)
+#admin.site.register(OrderItem, OrderItemAdmin)
+#admin.site.register(Order, OrderAdmin)
