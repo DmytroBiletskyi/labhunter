@@ -27,16 +27,19 @@ class SubjectAdmin(admin.ModelAdmin):
     prepopulated_fields = {'sub_slug': ('sub_name',)}
 
 
-class OrderItemAdmin(admin.ModelAdmin):
-    pass
+class OrderItemInline(admin.TabularInline):
+    model = OrderItem
+    raw_id_fields = ['file']
 
 
 class OrderAdmin(admin.ModelAdmin):
-    pass
+    list_display = ['id', 'first_name', 'last_name', 'email',
+                    'ordered', 'start_date', 'ordered_date']
+    list_filter = ['ordered', 'start_date', 'ordered_date']
+    inlines = [OrderItemInline]
 
 
 admin.site.register(Files, ServiceAdmin)
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Subject, SubjectAdmin)
-#admin.site.register(OrderItem, OrderItemAdmin)
-#admin.site.register(Order, OrderAdmin)
+admin.site.register(Order, OrderAdmin)

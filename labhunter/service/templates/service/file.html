@@ -21,6 +21,6 @@
     </button>
 </form>
 {% else %}
-<h3>Робота уже в корзині</h3>
+<h3><a href="{% url 'cart:cart_detail' %}">Робота уже в корзині</a></h3>
 {% endif %}
 {% endblock %}

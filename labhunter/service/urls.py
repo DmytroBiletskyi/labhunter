@@ -12,6 +12,7 @@ urlpatterns = [
     path('login/', LoginUser.as_view(), name='login'),
     path('logout/', logoutuser, name='logout'),
     path('register/', RegisterUser.as_view(), name='register'),
+    re_path(r'^create/$', order_create, name='order-create'),
     #path('add-to-cart/<pk>/', add_to_cart, name='add-to-cart'),
     #path('remove-from-cart/<pk>/', remove_from_cart, name='remove-from-cart'),
 ]
