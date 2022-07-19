@@ -1,26 +1,35 @@
 {% extends 'service/base.html' %}
 
 {% block content %}
-<h3>{{file.title}}</h3>
 
-{% if file.photo %}
-<p><iframe src='{{file.docx}}' width='200' height='300' frameborder='0'></iframe></p>
-{% endif %}
-<p class="price">{{ file.price }}$</p>
+<div class="file-box">
+    {% if file.photo %}
 
-{% if file.id in all_file %}
-<form action="{% url 'cart:cart_add' file.id %}" method="post">
-    {{ cart_file_form }}
-    {% csrf_token %}
-    <button type="submit">
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            Add to cart
-    </button>
-</form>
-{% else %}
-<h3><a href="{% url 'cart:cart_detail' %}">Робота уже в корзині</a></h3>
-{% endif %}
+    <div class="box-1">
+        <p>
+            <iframe class="iframe_file" src='{{file.docx}}' width='820' height='600' frameborder='0'></iframe>
+        </p>
+    </div>
+    {% endif %}
+    <div class="box-2">
+        <h3>{{file.title}}</h3>
+        <p class="price">Ціна: {{ file.price }}$</p>
+
+        {% if file.id in all_file %}
+        <form class="form-add_to_cart" action="{% url 'cart:cart_add' file.id %}" method="post">
+            {{ cart_file_form }}
+            {% csrf_token %}
+            <button type="submit">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                Додати до кошику
+            </button>
+        </form>
+        {% else %}
+        <h3><button class="btn-cart_detail"><a class="file-cart_detail" href="{% url 'cart:cart_detail' %}">Робота уже в корзині</a></button></h3>
+    </div>
+    {% endif %}
+</div>
 {% endblock %}

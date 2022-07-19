@@ -216,5 +216,15 @@ def order_create(request):
                           {'order': order, 'title': 'Thank you', })
     else:
         form = OrderCreateForm
-    return render(request, 'service/create.html',
-                  {'cart': cart, 'form': form, 'title': 'Checkout', })
+    categories = Category.objects.all()
+    login_menu = menu.copy()
+    if not request.user.is_authenticated:
+        login_menu.pop(1)
+    context = {
+        'cart': cart,
+        'form': form,
+        'title': 'Замовлення',
+        'menu': login_menu,
+        'categories': categories,
+    }
+    return render(request, 'service/create.html', context=context)

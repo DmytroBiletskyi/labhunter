@@ -4,45 +4,51 @@
 {% block content %}
 <div class="cart_wrapper">
     <h1>Ваша корзина покупок</h1>
-    <table class="cart cart-detail">
-        <thead>
-        <tr>
-            <th>Фото</th>
-            <th>Продукт</th>
-            <th>Кількість</th>
-            <th>Ціна</th>
-            <th>Видалити</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for item in cart %}
-        {% with file=item.file %}
-        <tr>
-            <td>
-                <a href="{{ file.get_absolute_url }}">
-                    <img src="
-                                {% if file.photo %}
-                                    {{ file.photo.url }}
-                                {% endif %}" height="100" width="100">
-                </a>
-            </td>
-            <td>{{ file.title }}</td>
-            <td>{{ item.quantity }}</td>
-            <td class="num">{{ item.total_price }}$</td>
-            <td><a class="remove" href="{% url 'cart:cart_remove' file.id %}"><button class="delete-item">X</button></a></td>
-        </tr>
-        {% endwith %}
-        {% endfor %}
-        <tr class="total">
-            <td>Загальна вартість</td>
-            <td colspan="3"></td>
-            <td class="num">{{ cart.get_total_price }}$</td>
-        </tr>
-        </tbody>
-    </table>
-    <p class="text-right">
-        <button class="cart-btn continue-shopping"><a href="{{ previous_url }}" class="button light">Continue shopping</a></button>
-        <button class="cart-btn checkout"><a href="{% url 'orders:order-create' %}" class="button">Checkout</a></button>
-    </p>
+    {% if cart|length > 0 %}
+        <table class="cart cart-detail">
+            <thead>
+            <tr>
+                <th>Фото</th>
+                <th>Продукт</th>
+                <th>Кількість</th>
+                <th>Ціна</th>
+                <th>Видалити</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for item in cart %}
+            {% with file=item.file %}
+            <tr>
+                <td>
+                    <a href="{{ file.get_absolute_url }}">
+                        <img src="
+                                    {% if file.photo %}
+                                        {{ file.photo.url }}
+                                    {% endif %}" height="100" width="100">
+                    </a>
+                </td>
+                <td>{{ file.title }}</td>
+                <td>{{ item.quantity }}</td>
+                <td class="num">{{ item.total_price }}$</td>
+                <td><a class="remove" href="{% url 'cart:cart_remove' file.id %}"><button class="delete-item">X</button></a></td>
+            </tr>
+            {% endwith %}
+            {% endfor %}
+            <tr class="total">
+                <td>Загальна вартість</td>
+                <td colspan="3"></td>
+                <td class="num">{{ cart.get_total_price }}$</td>
+            </tr>
+            </tbody>
+        </table>
+        <p class="text-right">
+            <button class="cart-btn continue-shopping"><a class="button light" href="{{ previous_url }}">Continue
+                shopping</a></button>
+            <button class="cart-btn checkout"><a href="{% url 'orders:order-create' %}" class="button">Checkout</a>
+            </button>
+        </p>
+    {% else %}
+        <h2>Корзина порожня :(</h2>
+    {% endif %}
 </div>
 {% endblock %}

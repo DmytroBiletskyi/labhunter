@@ -424,6 +424,7 @@ nav label:hover{
     cursor: pointer;
     background-color: rgba(0,0,0,.4);
     border-radius: 5px;
+    transition: 0.3s;
 }
 
 .cart-btn:hover{
@@ -446,4 +447,50 @@ nav label:hover{
 
 .checkout:hover{
     background-color: #24a319;
+}
+.file-box {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.file-box .box-1 {
+    margin-right: 30px;
+}
+
+.file-box .box-2 h3 {
+    color: black;
+    letter-spacing: 3px;
+    transition: 0.5s;
+    margin-bottom: 30px;
+}
+
+.file-box .box-2 .price{
+    color: black;
+    margin-bottom: 50px;
+}
+
+.file-box button {
+    color: #090909;
+    padding: 0.6em 1.5em;
+    font-size: 16px;
+    border-radius: 0.5em;
+    background: #e8e8e8;
+    border: 1px solid #e8e8e8;
+    transition: all .3s;
+    box-shadow: 6px 6px 12px #03e9f4;,
+                -6px -6px 12px #fff;
+}
+
+.file-box button:hover {
+    box-shadow: -6px -6px 12px #03e9f4;,
+                6px 6px 12px #fff;
+}
+
+.file-box .file-cart_detail {
+    color: black;
+}
+
+.file-box .iframe_file {
+    border: 5px solid;
+    border-radius: 5px;
 }
