@@ -4,7 +4,7 @@
 <div class="login-box">
     <h2>{{ title }}</h2>
 
-    <form method="post">
+    <form class="login-form" method="post">
 
         {% csrf_token %}
         <div class="form-error">{{ form.non_field_errors }}</div>
@@ -15,14 +15,14 @@
         </div>
             <div class="form-error">{{ f.errors }}</div>
         {% endfor %}
-        <div><a href="{% url 'register' %}">Зареєструватись</a></div>
-       <button type="submit">
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            Увійти
-       </button>
+        <div class="register"><a href="{% url 'register' %}">Зареєструватись</a></div>
+        <button type="submit">
+             <span></span>
+             <span></span>
+             <span></span>
+             <span></span>
+             Увійти
+        </button>
     </form>
 </div>
 {% endblock %}

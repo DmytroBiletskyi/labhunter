@@ -57,9 +57,9 @@
         <ul>
             {% for cat in categories %}
                     {% if cat.cat_name == cat_selected %}
-                        <li><i class="bi bi-check2"></i> {{cat.cat_name}}</li>
+                        <li><div class="select-cat no-selected"><i class="bi bi-check2"></i> {{cat.cat_name}}</div></li>
                     {% else %}
-                        <li><a href="{{ cat.get_absolute_url }}"><i class="bi bi-diamond"></i> {{cat.cat_name}} </a></li>
+                        <li><div class="select-cat"><a href="{{ cat.get_absolute_url }}"><i class="bi bi-diamond"></i> {{cat.cat_name}} </a></div></li>
                     {% endif %}
             {% endfor %}
         </ul>

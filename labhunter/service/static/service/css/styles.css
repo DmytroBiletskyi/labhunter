@@ -119,6 +119,10 @@ nav label:hover{
     background: rgba(0,0,0,.7);
 }
 
+.wrapper .sidebar li{
+
+}
+
 .wrapper .sidebar li.selected{
     color: #0059b2;
 }
@@ -140,11 +144,19 @@ nav label:hover{
         0 0 100px #03e9f4;
 }
 .wrapper .sidebar ul li{
-    padding: 15px;
+
     border-bottom: 1px solid rgba(0,0,0,0.05);
     border-top: 1px solid rgba(255, 255, 255, 0.05);
     color:  #03e9f4;
     transition: 0.3s;
+}
+
+.wrapper .sidebar .select-cat a{
+    padding: 15px;
+}
+
+.wrapper .sidebar .no-selected {
+    padding: 15px;
 }
 
 .wrapper .sidebar ul li:hover{
