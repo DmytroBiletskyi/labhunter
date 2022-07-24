@@ -1,22 +1,44 @@
 {% extends "service/base.html" %}
 
 {% block content %}
-    <h1>Замовлення</h1>
-    <div class="order-info">
-        <h3>Деталі замовлення</h3>
-        <ul>
-            {% for item in cart %}
+
+<div class="order-box">
+    <div class="order-label">
+        <div class="order-info">
+            <h2>Замовлення</h2>
+
+            <form action="." method="post" class="order-form">
+
+                {% csrf_token %}
+                <div class="form-error">{{ form.non_field_errors }}</div>
+
+                {% for f in form %}
+                    <div class="user-box">
+                        <p>{{ f }}<label class="form-label" for="{{ f.id_for_label }}">{{f.label}}</label></p>
+                    </div>
+                        <div class="form-error">{{ f.errors }}</div>
+                {% endfor %}
+                <button type="submit">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    Зробити замовлення
+                </button>
+            </form>
+        </div>
+        <div class="order-detail">
+            <h3>Деталі замовлення</h3>
+            <ul>
+                {% for item in cart %}
                 <li>
-                    {{ item.quantity }}x {{ item.product.name }}
+                    {{ item.quantity }}x {{ item.file.title }}
                     <span>{{ item.total_price }}$</span>
                 </li>
-            {% endfor %}
-        </ul>
-        <p>Total: {{ cart.get_total_price }}$</p>
+                {% endfor %}
+            </ul>
+            <p class="total">Загальна вартість: {{ cart.get_total_price }}$</p>
+        </div>
     </div>
-    <form action="." method="post" class="order-form">
-        {{ form.as_p }}
-        <p><input type="submit" value="Place order"></p>
-        {% csrf_token %}
-    </form>
+</div>
 {% endblock %}

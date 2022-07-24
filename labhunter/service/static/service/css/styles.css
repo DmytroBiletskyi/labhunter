@@ -41,9 +41,30 @@ a{
 .header__item headerButton right{
     text-align: right
 }
-nav{
 
+.header .header__section .bi-cart3 {
+    font-size: 18px;
 }
+
+.header .header__section .header__item button {
+    position: relative;
+}
+
+.header .header__section .header__item button::before {
+    content: attr(data-count);
+    position: absolute;
+    top: -0.75em;
+    right: -0.75em;
+    width: 1.3em;
+    height: 1.3em;
+    justify-content: center;
+    align-item: center;
+    border-radius: 50%;
+    display: flex;
+    background-color: red;
+    color: white;
+}
+
 nav li{
     display: inline-block;
 }
@@ -87,7 +108,10 @@ nav label:hover{
 
 .user__name{
     font-size: 16px;
-    color: #03e9f4;
+    color: black;
+    background: rgba(0,0,0,.15);
+    border-radius: 4px;
+    padding: 3px;
 }
 
 .header__item:hover{
@@ -347,6 +371,15 @@ nav label:hover{
     padding: 5px;
     display: block;
     max-width: 200px;
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+}
+
+.cart a{
+    color: black;
 }
 
 .cart_wrapper {
