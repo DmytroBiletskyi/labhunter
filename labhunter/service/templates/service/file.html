@@ -13,7 +13,7 @@
     {% endif %}
     <div class="box-2">
         <h3>{{file.title}}</h3>
-        <p class="price">Ціна: {{ file.price }}$</p>
+        <p class="price">Ціна: {{ file.price }}₴</p>
 
         {% if file.id in all_file %}
         <form class="form-add_to_cart" action="{% url 'cart:cart_add' file.id %}" method="post">

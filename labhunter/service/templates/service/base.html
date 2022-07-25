@@ -14,7 +14,6 @@
           integrity="sha384-eoTu3+HydHRBIjnCVwsFyCpUDZHZSFKEJD0mc3ZqSBSb6YhZzRHeiomAUWCstIWo" crossorigin="anonymous">
 </head>
 <body>
-<script src="{% static 'service/js/script.js' %}"></script>
 {% block header %}
 <nav class="header">
     <input type="checkbox" name="menu" id="btn-menu"/>
@@ -22,73 +21,81 @@
     <ul class="header__section">
         <li class="header__item headerLogo"><a href="{% url 'home' %}"><i class="bi bi-house-fill"></i></a></li>
         {% for m in menu %}
-            <li class="header__item headerButton"><a href="{% url m.url_name %}">{{ m.title }}</a></li>
+        <li class="header__item headerButton"><a href="{% url m.url_name %}">{{ m.title }}</a></li>
         {% endfor %}
         {% if request.user.is_authenticated %}
-            <li class="header__item headerButton right"><a href="{% url 'logout' %}">Вийти</a></li>
-            {% if cart|length > 0 %}
-                <li class="header__item headerButton right"><button class="bi-cart3-btn" data-count="{{ cart|length }}"><a href="{% url 'cart:cart_detail' %}"><i
-                        class="bi bi-cart3 bi-2xl"></i></a></button></li>
-            {% else %}
-                <li class="header__item headerButton right"><a href="{% url 'cart:cart_detail' %}"><i
-                        class="bi bi-cart3 bi-2xl"></i></a></li>
-            {% endif %}
+        <li class="header__item headerButton right push"><a href="{% url 'logout' %}">Вийти</a></li>
+        {% if cart|length > 0 %}
+        <li class="header__item headerButton right">
+            <button class="bi-cart3-btn" data-count="{{ cart|length }}"><a href="{% url 'cart:cart_detail' %}"><i
+                    class="bi bi-cart3 bi-2xl"></i></a></button>
+        </li>
         {% else %}
-            <li class="header__item headerButton right"><a href="{% url 'login' %}">Вхід</a></li>
-            {% if cart|length > 0 %}
-                <li class="header__item headerButton right"><button class="bi-cart3-btn" data-count="{{ cart|length }}"><a href="{% url 'cart:cart_detail' %}"><i
-                        class="bi bi-cart3 bi-2xl"></i></a></button></li>
-            {% else %}
-                <li class="header__item headerButton right"><a href="{% url 'cart:cart_detail' %}"><i
-                        class="bi bi-cart3 bi-2xl"></i></a></li>
-            {% endif %}
+        <li class="header__item headerButton right"><a href="{% url 'cart:cart_detail' %}"><i
+                class="bi bi-cart3 bi-2xl"></i></a></li>
+        {% endif %}
+        {% else %}
+        <li class="header__item headerButton right push"><a href="{% url 'login' %}">Вхід</a></li>
+        {% if cart|length > 0 %}
+        <li class="header__item headerButton right">
+            <button class="bi-cart3-btn" data-count="{{ cart|length }}"><a href="{% url 'cart:cart_detail' %}"><i
+                    class="bi bi-cart3 bi-2xl"></i></a></button>
+        </li>
+        {% else %}
+        <li class="header__item headerButton right"><a href="{% url 'cart:cart_detail' %}"><i
+                class="bi bi-cart3 bi-2xl"></i></a></li>
+        {% endif %}
         {% endif %}
     </ul>
 </nav>
+
 {% endblock header %}
-<!-- Sidebar зліва -->
+<!-- menu -->
 <div class="wrapper">
-    <div class="sidebar">
-        {% if cat_selected == 0 and request.path == '/' %}
-        <h2>Категорії</h2>
-        {% else %}
-        <h2><a href="{% url 'home' %}">Категорії</a></h2>
-        {% endif %}
-        <ul>
-            {% for cat in categories %}
-            {% if cat.cat_name == cat_selected %}
-            <li>
-                <div class="select-cat no-selected"><i class="bi bi-check2"></i> {{cat.cat_name}}</div>
-            </li>
+    <div class="dropdown-menu">
+        <div class="sidebar">
+            {% if cat_selected == 0 and request.path == '/' %}
+            <h2>Категорії</h2>
             {% else %}
-            <li>
-                <div class="select-cat"><a href="{{ cat.get_absolute_url }}"><i class="bi bi-diamond"></i>
-                    {{cat.cat_name}} </a></div>
-            </li>
+            <h2><a href="{% url 'home' %}">Категорії</a></h2>
             {% endif %}
-            {% endfor %}
-        </ul>
-        <div class="social_media">
-            <a href="#"><i class="bi bi-instagram"></i></a>
-            <a href="#"><i class="bi bi-telegram"></i></a>
+            <ul class="dropdown">
+                {% for cat in categories %}
+                {% if cat.cat_name == cat_selected %}
+                <li>
+                    <div class="select-cat no-selected"><i class="bi bi-check2"></i> {{cat.cat_name}}</div>
+                </li>
+                {% else %}
+                <li>
+                    <div class="select-cat"><a href="{{ cat.get_absolute_url }}"><i class="bi bi-diamond"></i>
+                        {{cat.cat_name}} </a></div>
+                </li>
+                {% endif %}
+                {% endfor %}
+            </ul>
+            <div class="social_media dropdown">
+                <a href="#"><i class="bi bi-instagram"></i></a>
+                <a href="#"><i class="bi bi-telegram"></i></a>
+            </div>
         </div>
     </div>
     <div class="main_content">
-        <!-- Кінець Sidebar'а -->
+        <!-- Кінець menu -->
         <div class="header-content">
             <ul class="content-box user__name">
                 {% if request.user.is_authenticated %}
-                    <li class="user__name right">Користувач - {{ user.username }}</li>
+                <li class="user__name right">Користувач - {{ user.username }}</li>
                 {% else %}
-                    Welcome
+                <li class="content-title">Welcome new user</li>
                 {% endif %}
             </ul>
+
             <div class="cart">
                 {% with total_items=cart|length %}
                 {% if cart|length > 0 %}
                 Ваша корзина:
                 <a href="{% url 'cart:cart_detail' %}">
-                    {{ cart.get_total_price }}$
+                    {{ cart.get_total_price }}₴
                 </a>
                 {% else %}
                 Ваша корзина пуста.
@@ -107,5 +114,6 @@
         <div class="header-filter"></div>
     </div>
 </div>
+<script src="{% static 'service/js/script.js' %}"></script>
 </body>
 </html>

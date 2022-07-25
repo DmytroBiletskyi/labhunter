@@ -29,7 +29,7 @@
                 </td>
                 <td>{{ file.title }}</td>
                 <td>{{ item.quantity }}</td>
-                <td class="num">{{ item.total_price }}$</td>
+                <td class="num">{{ item.total_price }}₴</td>
                 <td><a class="remove" href="{% url 'cart:cart_remove' file.id %}"><button class="delete-item">X</button></a></td>
             </tr>
             {% endwith %}
@@ -37,7 +37,7 @@
             <tr class="total">
                 <td>Загальна вартість</td>
                 <td colspan="3"></td>
-                <td class="num">{{ cart.get_total_price }}$</td>
+                <td class="num">{{ cart.get_total_price }}₴</td>
             </tr>
             </tbody>
         </table>
