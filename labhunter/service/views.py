@@ -17,6 +17,8 @@ from cart.forms import CartAddProductForm
 from .forms import *
 from .models import *
 from .utils import *
+
+from .tasks import order_created
 # biletskyi_labhunter
 
 #menu = [
@@ -212,6 +214,7 @@ def order_create(request):
                                          price=item['price'],
                                          quantity=item['quantity'])
             cart.clear()
+            order_created.delay(order.id)
             return render(request, 'service/created.html',
                           {'order': order, 'title': 'Thank you', })
     else:
@@ -228,3 +231,5 @@ def order_create(request):
         'categories': categories,
     }
     return render(request, 'service/create.html', context=context)
+
+

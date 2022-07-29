@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'service.apps.ServiceConfig',
     'cart.apps.CartConfig',
+    'paypal.standard.ipn',
 ]
 
 MIDDLEWARE = [
@@ -129,3 +130,14 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 CART_SESSION_ID = 'cart'
+
+PAYPAL_RECEIVER_EMAIL = 'babaha3000@gmail.com'
+PAYPAL_TEST = True
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+# REDIS related settings
+REDIS_HOST = 'localhost'
+REDIS_PORT = '6379'
+BROKER_URL = 'redis://' + REDIS_HOST + ':' + REDIS_PORT + '/0'
+BROKER_TRANSPORT_OPTIONS = {'visibility_timeout': 3600}
+CELERY_RESULT_BACKEND = 'redis://' + REDIS_HOST + ':' + REDIS_PORT + '/0'

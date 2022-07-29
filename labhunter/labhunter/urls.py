@@ -23,6 +23,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     re_path(r'^cart/', include(('cart.urls', 'cart'), namespace='cart')),
     re_path(r'^orders/', include(('service.urls', 'orders'), namespace='orders')),
+    re_path(r'paypal/', include('paypal.standard.ipn.urls')),
     path('', include('service.urls')),
 ]
 
